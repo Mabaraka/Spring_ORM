@@ -5,32 +5,27 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cars")
 public class Car {
-    public User getUser() {
-        return user;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+    @Column(name = "series")
     private int series;
 
     @Column(name = "model")
     private String model;
 
-    @OneToOne (mappedBy = "car", cascade = CascadeType.ALL)
-    private User user;
-
     public Car() {
     }
 
-    public Car(String model) {
+    public Car(int series, String model) {
+        this.series = series;
         this.model = model;
     }
 
     @Override
     public String toString() {
-        return "Car{" +
-                "series=" + series +
-                ", model='" + model + '\'' +
-                '}';
+        return "series = " + series + ", model = " + model;
     }
 }

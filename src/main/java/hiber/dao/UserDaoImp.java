@@ -12,28 +12,28 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
-   @Autowired
-   private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-   @Override
-   public void add(User user) {
-      sessionFactory.getCurrentSession().save(user);
-   }
+    @Override
+    public void add(User user) {
+        sessionFactory.getCurrentSession().save(user);
+    }
 
-   @Override
-   @SuppressWarnings("unchecked")
-   public List<User> listUsers() {
-      TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
-      return query.getResultList();
-   }
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> listUsers() {
+        return sessionFactory.getCurrentSession().createQuery("from User").getResultList();
+    }
 
-   @Override
-   @SuppressWarnings("unchecked")
-   public User getOwner(String model, int series) {
-      TypedQuery<Car> query = sessionFactory.openSession()
-              .createQuery("FROM Car WHERE model = :model AND series = :series").setParameter("model", model)
-              .setParameter("series", series);
-      return query.getResultList().get(0).getUser();
-   }
+    @Override
+    @SuppressWarnings("unchecked")
+    public User getOwner(String model, int series) {
+        String HQL = "FROM User WHERE car.model = :model and car.series = :series";
+        TypedQuery<User> query = sessionFactory.openSession().createQuery(HQL).setParameter("series", series)
+                .setParameter("model", model);
+        System.out.println(query);
+        return query.getSingleResult();
+    }
 
 }
