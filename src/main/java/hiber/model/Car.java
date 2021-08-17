@@ -9,11 +9,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @Column(name = "series")
     private int series;
-
-    @Column(name = "model")
     private String model;
 
     public Car() {
